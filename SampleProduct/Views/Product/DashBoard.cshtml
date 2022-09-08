@@ -1,0 +1,73 @@
+﻿@using DataLayer;
+@model IEnumerable<Product>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DashBoard</title>
+</head>
+<body>
+    <div>
+        <table style="padding:20px">
+            <tr>
+                <td style="background-color:darkslateblue;color:white;padding:10px">Dash Board</td>
+                <td></td>
+                <td><button onclick="location.href='@Url.Action("Index","Product")'">New Product</button></td>
+            </tr>
+            <tr>
+                @using (Html.BeginForm("DashBoard", "Product", FormMethod.Get))
+                {
+                    <td style="padding:10px">Search Text</td>
+                    <td style="padding: 10px">@Html.TextBox("q")</td>
+                    <td style="padding: 10px"><input type="submit" value="search" /></td>
+                }
+            </tr>
+        </table>
+    </div>
+    <div>
+        <table style="padding-left:20px;padding-right:20px">
+            <thead>
+                <tr style="background-color:darkslateblue;color:white">
+                    <th style="padding:5px">Product</th>
+                    <th style="padding:5px">Category</th>
+                    <th style="padding:5px">Price</th>
+                    <th style="padding:5px">Currency</th>
+                    <th style="padding:5px">Qty</th>
+                    <th style="padding:5px">UOM</th>
+                    <th style="padding:5px" colspan="2" class="wd-20p">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="border-style: solid; border-width: 1px; padding-left: 5px">@item.ProductName</td>
+                            <td style="border-style: solid; border-width: 1px; padding-left: 5px ">@item.Category</td>
+                            <td style="border-style: solid; border-width: 1px; padding-left: 5px ">@item.Price</td>
+                            <td style="border-style: solid; border-width: 1px; padding-left: 5px ">@item.Currency</td>
+                            <td style="border-style: solid; border-width: 1px; padding-left: 5px ">@item.Qty</td>
+                            <td style="border-style: solid; border-width: 1px; padding-left: 5px ">@item.Unit</td>
+                            <td>
+                                <button onclick="location.href='@Url.Action("Index","Product",new {q=""+@item.ID+""})'">Edit</button>
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("DeleteProduct", "Product", new { q = item.ID }))
+                                {
+                                    <input type="submit" value="Delete" onclick="return confirm('Are you sure to delete product having name : @item.ProductName');" />
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

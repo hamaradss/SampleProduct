@@ -1,0 +1,76 @@
+﻿@model SampleProduct.Models.ProductUpdateViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Update Product</title>
+</head>
+<body>
+    <div style="padding:30px">
+        @using (Html.BeginForm("Index", "Product", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => Model.product.ID, htmlAttributes: new { @name = "productID" })
+            <table>
+                <tr>
+                    <td colspan="3" style="background-color:darkslateblue;color:white;padding:10px">
+                        Update Product Details
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:150px">Product Name :</td>
+                    <td style="padding:5px">@Html.TextBoxFor(x => Model.product.ProductName)</td>
+                    <td style="color:red">@Html.ValidationMessageFor(x => x.product.ProductName)</td>
+                </tr>
+                <tr>
+                    <td>Category :</td>
+                    <td style="padding:5px">
+                        @Html.DropDownListFor(x => Model.product.Category, new SelectList(Model.CategoryList, "Category1", "Category1"), "Select a category")
+                    </td>
+                    <td style="color:red">@Html.ValidationMessageFor(x => x.product.Category)</td>
+                </tr>
+                <tr>
+                    <td>Price : </td>
+                    <td style="padding:5px">@Html.TextBoxFor(x => Model.product.Price)</td>
+                    <td style="color:red">@Html.ValidationMessageFor(x => x.product.Price)</td>
+                </tr>
+                <tr>
+                    <td>Currency :</td>
+                    <td style="padding:5px">
+                        @Html.DropDownListFor(x => Model.product.Currency, new SelectList(Model.CurrencyList, "Currency1", "Currency1"), "Select currency")
+                    </td>
+                    <td style="color:red">@Html.ValidationMessageFor(x => x.product.Currency)</td>
+                </tr>
+                <tr>
+                    <td>Quantity : </td>
+                    <td style="padding:5px">@Html.TextBoxFor(x => Model.product.Qty)</td>
+                    <td style="color:red">@Html.ValidationMessageFor(x => x.product.Qty)</td>
+                </tr>
+                <tr>
+                    <td>Unit : </td>
+                    <td style="padding:5px">@Html.DropDownListFor(x => Model.product.Unit, new SelectList(Model.UnitList, "Unit1", "Unit1"), "Select a unit")</td>
+                    <td style="color:red">@Html.ValidationMessageFor(x => x.product.Unit)</td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td style="padding:5px">
+                        <button type="submit">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding:10px">
+                        <span style="font-weight:bold;color:red">@ViewBag.errMsg</span>
+                        <span style="font-weight:bold;color:green">@ViewBag.sucMsg</span>
+                    </td>
+                </tr>
+            </table>
+        }
+    <div style="margin-top:-50px">
+        <button onclick="location.href='@Url.Action("DashBoard","Product")'">Cancel</button>
+    </div>        
+    </div>
+</body>
+</html>
